@@ -2,16 +2,15 @@ apply plugin: 'com.android.library'
 // 这里添加下面两行代码。
 apply plugin: 'com.github.dcendents.android-maven'
 apply plugin: 'com.jfrog.bintray'
-
 android {
     compileSdkVersion 26
-    buildToolsVersion "26.0.0"
+    buildToolsVersion "26.0.1"
 
     defaultConfig {
         minSdkVersion 16
         targetSdkVersion 26
-        versionCode 1
-        versionName "1.0.0"
+        versionCode 5
+        versionName "1.0.5"
     }
     buildTypes {
         release {
@@ -19,27 +18,16 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-    dataBinding {
-        enabled = true
-    }
 }
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
-        exclude group: 'com.android.support', module: 'support-annotations'
-    })
-    compile 'com.android.support:appcompat-v7:26.+'
-    compile 'com.android.support.constraint:constraint-layout:1.0.2'
-    testCompile 'junit:junit:4.12'
-    compile 'com.scwang.smartrefresh:SmartRefreshLayout:1.0.3'
-    compile 'com.android.support:recyclerview-v7:26.+'
-    compile 'com.android.support:support-v4:26.+'
-    compile 'com.android.support:design:26.+'
+    provided 'com.android.support:recyclerview-v7:26.+'
 }
+
 // 定义两个链接，下面会用到。
-def siteUrl = 'https://github.com/zhaol2015/refreshlayout' // 项目主页。
-def gitUrl = 'https://github.com/zhaol2015/refreshlayout.git' // Git仓库的url。
+def siteUrl = 'https://github.com/axuan2015/AlphaRefreshLayout' // 项目主页。
+def gitUrl = 'https://github.com/axuan2015/AlphaRefreshLayout.git' // Git仓库的url。
 
 group = "com.zhaol.refreshlayout"// 唯一包名,比如compile 'com.ansen.http:okhttpencapsulation:1.0.1'中的com.ansen.http就是这里配置的。
 version = "1.0.1"//项目引用的版本号，比如compile 'com.ansen.http:okhttpencapsulation:1.0.1'中的1.0.1就是这里配置的。
@@ -66,9 +54,9 @@ install {
                 //填写开发者基本信息，复制我的，这里需要修改。
                 developers {
                     developer {
-                        id 'zhaolu' // 开发者的id。
-                        name 'zhaolu' // 开发者名字。
-                        email 'zhao18687063@gmail.com' // 开发者邮箱。
+                        id 'asange' // 开发者的id。
+                        name 'asange' // 开发者名字。
+                        email 'xuanyouwu@gmail.com' // 开发者邮箱。
                     }
                 }
 
@@ -116,13 +104,15 @@ bintray {
 
     configurations = ['archives']
     pkg {
-        userOrg = 'zhaol'//Bintray的组织id
-        repo = "zhaolu"  //Repository名字 需要自己在bintray网站上先添加
-        name = "refreshlayout"// 发布到Bintray上的项目名字，这里的名字不是compile 'com.ansen.library:circleimage:1.0.1'中的circleimage。
+        repo = "refreshlayout"  //Repository名字 需要自己在bintray网站上先添加
+        name = "refreshlayout"
+// 发布到Bintray上的项目名字，这里的名字不是compile 'com.ansen.library:circleimage:1.0.1'中的circleimage。
+        userOrg = 'asange'//Bintray的组织id
         websiteUrl = siteUrl
         vcsUrl = gitUrl
         licenses = ["Apache-2.0"]
         publish = true // 是否是公开项目。
     }
 }
+
 
