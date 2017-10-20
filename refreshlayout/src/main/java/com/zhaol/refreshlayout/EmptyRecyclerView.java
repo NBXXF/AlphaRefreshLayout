@@ -5,14 +5,18 @@ import android.support.annotation.DrawableRes;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.StringRes;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.scwang.smartrefresh.layout.util.DensityUtil;
 
 import java.util.List;
 
@@ -28,6 +32,7 @@ import java.util.List;
 public class EmptyRecyclerView extends FrameLayout {
     private View emptyView;
     private FrameLayout emptyParentFrameLayout;
+    private NestedScrollView emptyParentScrollView;
     /**
      * 空布局icon
      */
@@ -100,6 +105,7 @@ public class EmptyRecyclerView extends FrameLayout {
         rootView = LayoutInflater.from(context).inflate(R.layout.custom_recyclerview_layout, this);
         recyclerView = rootView.findViewById(R.id.parent_recyclerview);
         emptyParentFrameLayout = rootView.findViewById(R.id.empty_parent_view);
+        emptyParentScrollView = rootView.findViewById(R.id.empty_parent_scrollview);
 
         setEmptyView(context, R.layout.refresh_empty_view);
         emptyIconIv = emptyView.findViewById(R.id.contentEmptyImage);
@@ -117,6 +123,42 @@ public class EmptyRecyclerView extends FrameLayout {
 
     public RecyclerView getRecyclerView() {
         return recyclerView;
+    }
+
+    /**
+     * 设置空图标top Margin
+     *
+     * @param topPx px
+     */
+    public void setEmptyViewMarginTopPx(int topPx) {
+        if (emptyParentFrameLayout == null) {
+            return;
+        }
+        FrameLayout.LayoutParams layoutParams = (FrameLayout.LayoutParams) emptyParentFrameLayout.getLayoutParams();
+        if (layoutParams == null) {
+            return;
+        }
+        layoutParams.gravity = Gravity.CENTER_HORIZONTAL;
+        layoutParams.setMargins(0, topPx, 0, 0);
+        emptyParentFrameLayout.setLayoutParams(layoutParams);
+    }
+
+    /**
+     * 设置空图标top Margin
+     *
+     * @param topDp dp
+     */
+    public void setEmptyViewMarginTopDp(int topDp) {
+        if (emptyParentFrameLayout == null) {
+            return;
+        }
+        FrameLayout.LayoutParams layoutParams = (FrameLayout.LayoutParams) emptyParentFrameLayout.getLayoutParams();
+        if (layoutParams == null) {
+            return;
+        }
+        layoutParams.gravity = Gravity.CENTER_HORIZONTAL;
+        layoutParams.setMargins(0, DensityUtil.dp2px(topDp), 0, 0);
+        emptyParentFrameLayout.setLayoutParams(layoutParams);
     }
 
     /**
@@ -181,9 +223,9 @@ public class EmptyRecyclerView extends FrameLayout {
      * 是否显示emptyview
      */
     public void checkIfEmpty() {
-        if (emptyParentFrameLayout != null && recyclerView.getAdapter() != null) {
+        if (emptyParentScrollView != null && recyclerView.getAdapter() != null) {
             boolean emptyViewVisible = recyclerView.getAdapter() == null || recyclerView.getAdapter().getItemCount() <= 0;
-            emptyParentFrameLayout.setVisibility(emptyViewVisible ? VISIBLE : GONE);
+            emptyParentScrollView.setVisibility(emptyViewVisible ? VISIBLE : GONE);
             recyclerView.setVisibility(emptyViewVisible ? GONE : VISIBLE);
         }
     }
@@ -194,9 +236,9 @@ public class EmptyRecyclerView extends FrameLayout {
      * @param result 用来判断是否要显示空页面的列表
      */
     public void enableEmptyView(List result) {
-        if (emptyParentFrameLayout != null) {
+        if (emptyParentScrollView != null) {
             boolean emptyViewVisible = result == null || result.isEmpty();
-            emptyParentFrameLayout.setVisibility(emptyViewVisible ? VISIBLE : GONE);
+            emptyParentScrollView.setVisibility(emptyViewVisible ? VISIBLE : GONE);
             recyclerView.setVisibility(emptyViewVisible ? GONE : VISIBLE);
         }
     }
