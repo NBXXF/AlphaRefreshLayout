@@ -3,6 +3,7 @@ package com.zhaol.refreshlayout;
 import android.content.Context;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.LayoutRes;
+import android.support.annotation.NonNull;
 import android.support.annotation.StringRes;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
@@ -21,14 +22,20 @@ import java.util.List;
  * Company Beijing icourt
  * author  lu.zhao  E-mail:zhaolu@icourt.cc
  * date createTime：17/9/21
- * version 2.0.0
+ * version 1.0.2
  */
 
 public class EmptyRecyclerView extends FrameLayout {
     private View emptyView;
     private FrameLayout emptyParentFrameLayout;
-    private ImageView emptyIcon;//空布局icon
-    private TextView emptyContent;//空布局内容
+    /**
+     * 空布局icon
+     */
+    private ImageView emptyIconIv;
+    /**
+     * 空布局内容
+     */
+    private TextView emptyContentTv;
     private LinearLayout emptyLayout;
     private RecyclerView recyclerView;
     private View rootView;
@@ -95,14 +102,15 @@ public class EmptyRecyclerView extends FrameLayout {
         emptyParentFrameLayout = rootView.findViewById(R.id.empty_parent_view);
 
         setEmptyView(context, R.layout.refresh_empty_view);
-        emptyIcon = emptyView.findViewById(R.id.contentEmptyImage);
-        emptyContent = emptyView.findViewById(R.id.contentEmptyText);
+        emptyIconIv = emptyView.findViewById(R.id.contentEmptyImage);
+        emptyContentTv = emptyView.findViewById(R.id.contentEmptyText);
         emptyLayout = emptyView.findViewById(R.id.empty_layout);
         emptyView.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (onEmptyViewClickListener != null)
+                if (onEmptyViewClickListener != null) {
                     onEmptyViewClickListener.onEmptyViewClick();
+                }
             }
         });
     }
@@ -187,24 +195,32 @@ public class EmptyRecyclerView extends FrameLayout {
      */
     public void enableEmptyView(List result) {
         if (emptyParentFrameLayout != null) {
-            boolean emptyViewVisible = result == null || result.isEmpty() || result.size() <= 0;
+            boolean emptyViewVisible = result == null || result.isEmpty();
             emptyParentFrameLayout.setVisibility(emptyViewVisible ? VISIBLE : GONE);
             recyclerView.setVisibility(emptyViewVisible ? GONE : VISIBLE);
         }
     }
 
-    public void setNoticeEmpty(@DrawableRes int id, CharSequence text) {
-        if (emptyIcon == null) return;
-        if (emptyContent == null) return;
-        emptyIcon.setImageResource(id);
-        emptyContent.setText(text);
+    public void setNoticeEmpty(@DrawableRes int id, @NonNull CharSequence text) {
+        if (emptyIconIv == null) {
+            return;
+        }
+        if (emptyContentTv == null) {
+            return;
+        }
+        emptyIconIv.setImageResource(id);
+        emptyContentTv.setText(text);
     }
 
-    public void setNoticeEmpty(@DrawableRes int resid, @StringRes int strid) {
-        if (emptyIcon == null) return;
-        if (emptyContent == null) return;
-        emptyIcon.setImageResource(resid);
-        emptyContent.setText(getResources().getString(strid));
+    public void setNoticeEmpty(@DrawableRes int resId, @StringRes int strId) {
+        if (emptyIconIv == null) {
+            return;
+        }
+        if (emptyContentTv == null) {
+            return;
+        }
+        emptyIconIv.setImageResource(resId);
+        emptyContentTv.setText(getResources().getString(strId));
     }
 
     /**
@@ -213,8 +229,10 @@ public class EmptyRecyclerView extends FrameLayout {
      * @param id
      */
     public void setEmptyIcon(@DrawableRes int id) {
-        if (emptyIcon == null) return;
-        emptyIcon.setImageResource(id);
+        if (emptyIconIv == null) {
+            return;
+        }
+        emptyIconIv.setImageResource(id);
     }
 
     /**
@@ -222,9 +240,11 @@ public class EmptyRecyclerView extends FrameLayout {
      *
      * @param text
      */
-    public void setEmptyContent(CharSequence text) {
-        if (emptyContent == null) return;
-        emptyContent.setText(text);
+    public void setEmptyContent(@NonNull CharSequence text) {
+        if (emptyContentTv == null) {
+            return;
+        }
+        emptyContentTv.setText(text);
     }
 
     /**
@@ -233,14 +253,19 @@ public class EmptyRecyclerView extends FrameLayout {
      * @param id
      */
     public void setEmptyContent(@StringRes int id) {
-        if (emptyContent == null) return;
-        emptyContent.setText(getResources().getString(id));
+        if (emptyContentTv == null) {
+            return;
+        }
+        emptyContentTv.setText(getResources().getString(id));
     }
 
     /**
      * emptyview点击监听
      */
     public interface OnEmptyViewClickListener {
+        /**
+         * 空图标点击事件
+         */
         void onEmptyViewClick();
     }
 }

@@ -35,7 +35,7 @@ import java.util.List;
  * Company Beijing icourt
  * author  lu.zhao  E-mail:zhaolu@icourt.cc
  * date createTime：17/10/9
- * version 2.0.0
+ * version 1.0.2
  */
 
 public class AlphaRefreshHeader extends RelativeLayout implements RefreshHeader {
@@ -155,8 +155,6 @@ public class AlphaRefreshHeader extends RelativeLayout implements RefreshHeader 
             mProgressDrawable = new com.zhaol.refreshlayout.MaterialProgressDrawable(getContext(), mProgressView);
             mProgressDrawable.setColorSchemeColors(0xffed6c00);
             mProgressDrawable.setAlpha(255);
-//            mProgressDrawable.setProgressRotation(0.9f);
-//            mProgressDrawable.setStartEndTrim(0f, 0.2f);
             mProgressView.setImageDrawable(mProgressDrawable);
         }
 
@@ -274,7 +272,8 @@ public class AlphaRefreshHeader extends RelativeLayout implements RefreshHeader 
             }
         }
         mProgressView.setVisibility(GONE);
-        return mFinishDuration;//延迟500毫秒之后再弹回
+        //延迟500毫秒之后再弹回
+        return mFinishDuration;
     }
 
     @Override
@@ -288,6 +287,7 @@ public class AlphaRefreshHeader extends RelativeLayout implements RefreshHeader 
     }
 
     @NonNull
+    @Override
     public View getView() {
         return this;
     }
@@ -315,6 +315,8 @@ public class AlphaRefreshHeader extends RelativeLayout implements RefreshHeader 
             case Loading:
                 mArrowView.setVisibility(GONE);
                 mProgressView.setVisibility(GONE);
+                break;
+            default:
                 break;
         }
     }

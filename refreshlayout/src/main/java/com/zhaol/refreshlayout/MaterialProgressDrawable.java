@@ -31,7 +31,7 @@ import java.util.ArrayList;
  * Company Beijing icourt
  * author  lu.zhao  E-mail:zhaolu@icourt.cc
  * date createTime：17/10/9
- * version 2.0.0
+ * version 1.0.2
  */
 public class MaterialProgressDrawable extends Drawable implements Animatable {
     private static final Interpolator LINEAR_INTERPOLATOR = new LinearInterpolator();
@@ -44,17 +44,28 @@ public class MaterialProgressDrawable extends Drawable implements Animatable {
     public @interface ProgressDrawableSize {
     }
 
-    // Maps to ProgressBar.Large style
+    /**
+     * Maps to ProgressBar.Large style
+     */
     public static final int LARGE = 0;
-    // Maps to ProgressBar default style
+    /**
+     * Maps to ProgressBar default style
+     */
     public static final int DEFAULT = 1;
 
-    // Maps to ProgressBar default style
+    /**
+     * Maps to ProgressBar default style
+     */
     private static final int CIRCLE_DIAMETER = 40;
-    private static final float CENTER_RADIUS = 8.75f; //should add up to 10 when + stroke_width
+    /**
+     * should add up to 10 when + stroke_width
+     */
+    private static final float CENTER_RADIUS = 8.75f;
     private static final float STROKE_WIDTH = 1.0f;
 
-    // Maps to ProgressBar.Large style
+    /**
+     * Maps to ProgressBar.Large style
+     */
     private static final int CIRCLE_DIAMETER_LARGE = 56;
     private static final float CENTER_RADIUS_LARGE = 12.5f;
     private static final float STROKE_WIDTH_LARGE = 2.0f;
@@ -299,7 +310,13 @@ public class MaterialProgressDrawable extends Drawable implements Animatable {
                 ring.getStrokeWidth() / (2 * Math.PI * ring.getCenterRadius()));
     }
 
-    // Adapted from ArgbEvaluator.java
+    /**
+     * Adapted from ArgbEvaluator.java
+     * @param fraction
+     * @param startValue
+     * @param endValue
+     * @return
+     */
     private int evaluateColorChange(float fraction, int startValue, int endValue) {
         int startInt = (Integer) startValue;
         int startA = (startInt >> 24) & 0xff;

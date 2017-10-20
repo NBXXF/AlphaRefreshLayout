@@ -29,7 +29,7 @@ import com.scwang.smartrefresh.layout.util.DensityUtil;
  * Company Beijing icourt
  * author  lu.zhao  E-mail:zhaolu@icourt.cc
  * date createTime：17/10/10
- * version 2.0.0
+ * version 1.0.2
  */
 
 public class AlphaLoadFooter extends RelativeLayout implements RefreshFooter {
@@ -87,7 +87,7 @@ public class AlphaLoadFooter extends RelativeLayout implements RefreshFooter {
             mProgressDrawable.setColorSchemeColors(0xffed6c00);
             mProgressDrawable.setAlpha(255);
             mProgressDrawable.setProgressRotation(0.9f);
-            mProgressDrawable.setStartEndTrim(0f,0.2f);
+            mProgressDrawable.setStartEndTrim(0f, 0.2f);
             mProgressDrawable.updateSizes(com.zhaol.refreshlayout.MaterialProgressDrawable.DEFAULT);
             mProgressView.setImageDrawable(mProgressDrawable);
         }
@@ -179,8 +179,9 @@ public class AlphaLoadFooter extends RelativeLayout implements RefreshFooter {
     /**
      * AlphaLoadFooter 在(SpinnerStyle.FixedBehind)时才有主题色
      */
-    @Override@Deprecated
-    public void setPrimaryColors(@ColorInt int ... colors) {
+    @Override
+    @Deprecated
+    public void setPrimaryColors(@ColorInt int... colors) {
         if (mSpinnerStyle == SpinnerStyle.FixedBehind) {
             if (colors.length > 0) {
                 if (!(getBackground() instanceof BitmapDrawable)) {
@@ -208,6 +209,7 @@ public class AlphaLoadFooter extends RelativeLayout implements RefreshFooter {
     }
 
     @NonNull
+    @Override
     public View getView() {
         return this;
     }
@@ -231,6 +233,8 @@ public class AlphaLoadFooter extends RelativeLayout implements RefreshFooter {
                 case Refreshing:
                     mProgressView.setVisibility(GONE);
                     break;
+                default:
+                    break;
             }
         }
     }
@@ -240,20 +244,24 @@ public class AlphaLoadFooter extends RelativeLayout implements RefreshFooter {
         mProgressView.setImageBitmap(bitmap);
         return this;
     }
+
     public AlphaLoadFooter setProgressDrawable(Drawable drawable) {
         mProgressDrawable = null;
         mProgressView.setImageDrawable(drawable);
         return this;
     }
+
     public AlphaLoadFooter setProgressResource(@DrawableRes int resId) {
         mProgressDrawable = null;
         mProgressView.setImageResource(resId);
         return this;
     }
+
     public AlphaLoadFooter setSpinnerStyle(SpinnerStyle style) {
         this.mSpinnerStyle = style;
         return this;
     }
+
     public AlphaLoadFooter setPrimaryColor(@ColorInt int primaryColor) {
         setBackgroundColor(mBackgroundColor = primaryColor);
         if (mRefreshKernel != null) {
