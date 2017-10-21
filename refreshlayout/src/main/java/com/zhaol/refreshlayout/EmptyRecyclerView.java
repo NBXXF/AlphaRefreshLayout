@@ -5,7 +5,6 @@ import android.support.annotation.DrawableRes;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.StringRes;
-import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.view.Gravity;
@@ -32,7 +31,6 @@ import java.util.List;
 public class EmptyRecyclerView extends FrameLayout {
     private View emptyView;
     private FrameLayout emptyParentFrameLayout;
-    private NestedScrollView emptyParentScrollView;
     /**
      * 空布局icon
      */
@@ -86,11 +84,17 @@ public class EmptyRecyclerView extends FrameLayout {
     }
 
     public void setEmptyView(Context context, @LayoutRes int id) {
+        if (emptyParentFrameLayout == null) {
+            return;
+        }
         emptyParentFrameLayout.removeAllViews();
         emptyView = View.inflate(context, id, emptyParentFrameLayout);
     }
 
     public void setEmptyView(View view) {
+        if (emptyParentFrameLayout == null || view == null) {
+            return;
+        }
         emptyParentFrameLayout.removeAllViews();
         emptyView = view;
         emptyParentFrameLayout.addView(emptyView);
@@ -103,14 +107,19 @@ public class EmptyRecyclerView extends FrameLayout {
      */
     private void initEmptyView(Context context) {
         rootView = LayoutInflater.from(context).inflate(R.layout.custom_recyclerview_layout, this);
-        recyclerView = rootView.findViewById(R.id.parent_recyclerview);
-        emptyParentFrameLayout = rootView.findViewById(R.id.empty_parent_view);
-        emptyParentScrollView = rootView.findViewById(R.id.empty_parent_scrollview);
+        if (rootView == null) {
+            return;
+        }
+        recyclerView = rootView.findViewById(R.id.zl_alpha_empty_parent_recyclerview);
+        emptyParentFrameLayout = rootView.findViewById(R.id.zl_alpha_empty_parent_framelayout);
 
         setEmptyView(context, R.layout.refresh_empty_view);
-        emptyIconIv = emptyView.findViewById(R.id.contentEmptyImage);
-        emptyContentTv = emptyView.findViewById(R.id.contentEmptyText);
-        emptyLayout = emptyView.findViewById(R.id.empty_layout);
+        if (emptyView == null) {
+            return;
+        }
+        emptyIconIv = emptyView.findViewById(R.id.zl_alpha_empty_iv);
+        emptyContentTv = emptyView.findViewById(R.id.zl_alpha_empty_tv);
+        emptyLayout = emptyView.findViewById(R.id.zl_alpha_empty_layout);
         emptyView.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -223,9 +232,9 @@ public class EmptyRecyclerView extends FrameLayout {
      * 是否显示emptyview
      */
     public void checkIfEmpty() {
-        if (emptyParentScrollView != null && recyclerView.getAdapter() != null) {
+        if (emptyParentFrameLayout != null && recyclerView.getAdapter() != null) {
             boolean emptyViewVisible = recyclerView.getAdapter() == null || recyclerView.getAdapter().getItemCount() <= 0;
-            emptyParentScrollView.setVisibility(emptyViewVisible ? VISIBLE : GONE);
+            emptyParentFrameLayout.setVisibility(emptyViewVisible ? VISIBLE : GONE);
             recyclerView.setVisibility(emptyViewVisible ? GONE : VISIBLE);
         }
     }
@@ -236,9 +245,9 @@ public class EmptyRecyclerView extends FrameLayout {
      * @param result 用来判断是否要显示空页面的列表
      */
     public void enableEmptyView(List result) {
-        if (emptyParentScrollView != null) {
+        if (emptyParentFrameLayout != null) {
             boolean emptyViewVisible = result == null || result.isEmpty();
-            emptyParentScrollView.setVisibility(emptyViewVisible ? VISIBLE : GONE);
+            emptyParentFrameLayout.setVisibility(emptyViewVisible ? VISIBLE : GONE);
             recyclerView.setVisibility(emptyViewVisible ? GONE : VISIBLE);
         }
     }
