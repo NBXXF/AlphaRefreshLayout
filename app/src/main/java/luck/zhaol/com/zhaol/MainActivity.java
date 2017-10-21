@@ -39,7 +39,6 @@ public class MainActivity extends AppCompatActivity {
         smartRefreshLayout = (SmartRefreshLayout) findViewById(R.id.SmartRefreshLayout);
         recyclerView = (EmptyRecyclerView) findViewById(R.id.EmptyRecyclerView);
 
-        recyclerView.setEmptyViewMarginTopDp(200);
         smartRefreshLayout.setEnableAutoLoadmore(false);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(mAdapter = new BaseRecyclerAdapter<Model>(loadModels(), R.layout.listitem_practive_repast) {
@@ -62,17 +61,27 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {
-                mAdapter.refresh(loadModels());
+                mAdapter.refresh(refresh());
                 smartRefreshLayout.finishRefresh();
                 smartRefreshLayout.setEnableLoadmore(true);
             }
         });
     }
 
+
+
     /**
      * 模拟数据
      */
     private Collection<Model> loadModels() {
+
+        List<Model> models = new ArrayList<>();
+        return models;
+    }
+    /**
+     * 模拟数据
+     */
+    private Collection<Model> refresh() {
 
         List<Model> models = new ArrayList<>();
         for (int i = 1; i <= 20; i++) {
@@ -82,7 +91,6 @@ public class MainActivity extends AppCompatActivity {
         }
         return models;
     }
-
     /**
      * 模拟数据
      */

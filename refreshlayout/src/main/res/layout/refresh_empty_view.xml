@@ -1,43 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.widget.NestedScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center"
     android:orientation="vertical">
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:id="@+id/zl_alpha_empty_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:gravity="center"
         android:orientation="vertical">
 
-        <LinearLayout
-            android:id="@+id/zl_alpha_empty_layout"
+        <ImageView
+            android:id="@+id/zl_alpha_empty_iv"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:scaleType="centerCrop"
+            android:src="@mipmap/ic_empty_data" />
+
+        <TextView
+            android:id="@+id/zl_alpha_empty_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="50dp"
+            android:layout_marginTop="10dp"
             android:gravity="center"
-            android:orientation="vertical">
-
-            <ImageView
-                android:id="@+id/zl_alpha_empty_iv"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                android:scaleType="centerCrop"
-                android:src="@mipmap/ic_empty_data" />
-
-            <TextView
-                android:id="@+id/zl_alpha_empty_tv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="50dp"
-                android:layout_marginTop="10dp"
-                android:gravity="center"
-                android:maxLines="3"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp"
-                android:text="暂无内容"
-                android:textSize="14dp" />
-        </LinearLayout>
+            android:maxLines="3"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:text="暂无内容"
+            android:textSize="14dp" />
     </LinearLayout>
-</android.support.v4.widget.NestedScrollView>
+</LinearLayout>

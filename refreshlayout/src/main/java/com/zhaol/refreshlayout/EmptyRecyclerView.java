@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.scwang.smartrefresh.layout.util.DensityUtil;
@@ -31,6 +32,7 @@ import java.util.List;
 public class EmptyRecyclerView extends FrameLayout {
     private View emptyView;
     private FrameLayout emptyParentFrameLayout;
+    private RelativeLayout emptyParentRelativeLayout;
     /**
      * 空布局icon
      */
@@ -111,6 +113,7 @@ public class EmptyRecyclerView extends FrameLayout {
             return;
         }
         recyclerView = rootView.findViewById(R.id.zl_alpha_empty_parent_recyclerview);
+        emptyParentRelativeLayout = rootView.findViewById(R.id.zl_alpha_empty_parent_relativeLayout);
         emptyParentFrameLayout = rootView.findViewById(R.id.zl_alpha_empty_parent_framelayout);
 
         setEmptyView(context, R.layout.refresh_empty_view);
@@ -232,9 +235,9 @@ public class EmptyRecyclerView extends FrameLayout {
      * 是否显示emptyview
      */
     public void checkIfEmpty() {
-        if (emptyParentFrameLayout != null && recyclerView.getAdapter() != null) {
+        if (emptyParentRelativeLayout != null && recyclerView.getAdapter() != null) {
             boolean emptyViewVisible = recyclerView.getAdapter() == null || recyclerView.getAdapter().getItemCount() <= 0;
-            emptyParentFrameLayout.setVisibility(emptyViewVisible ? VISIBLE : GONE);
+            emptyParentRelativeLayout.setVisibility(emptyViewVisible ? VISIBLE : GONE);
             recyclerView.setVisibility(emptyViewVisible ? GONE : VISIBLE);
         }
     }
@@ -245,9 +248,9 @@ public class EmptyRecyclerView extends FrameLayout {
      * @param result 用来判断是否要显示空页面的列表
      */
     public void enableEmptyView(List result) {
-        if (emptyParentFrameLayout != null) {
+        if (emptyParentRelativeLayout != null) {
             boolean emptyViewVisible = result == null || result.isEmpty();
-            emptyParentFrameLayout.setVisibility(emptyViewVisible ? VISIBLE : GONE);
+            emptyParentRelativeLayout.setVisibility(emptyViewVisible ? VISIBLE : GONE);
             recyclerView.setVisibility(emptyViewVisible ? GONE : VISIBLE);
         }
     }

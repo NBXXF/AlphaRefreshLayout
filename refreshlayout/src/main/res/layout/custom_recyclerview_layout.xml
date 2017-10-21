@@ -4,12 +4,24 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <FrameLayout
-        android:id="@+id/zl_alpha_empty_parent_framelayout"
+    <RelativeLayout
+        android:id="@+id/zl_alpha_empty_parent_relativeLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-    </FrameLayout>
+        <android.support.v4.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <FrameLayout
+                android:id="@+id/zl_alpha_empty_parent_framelayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center">
+
+            </FrameLayout>
+        </android.support.v4.widget.NestedScrollView>
+    </RelativeLayout>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/zl_alpha_empty_parent_recyclerview"
