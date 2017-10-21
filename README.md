@@ -1,3 +1,3 @@
 # AlphaRefreshLayout
   
-  compile 'com.zhaol.refreshlayout:refreshlayout:1.0.4'
+  compile 'com.zhaol.refreshlayout:refreshlayout:1.0.5'
