@@ -92,7 +92,7 @@ public class EmptyRecyclerView extends FrameLayout {
         emptyParentFrameLayout.removeAllViews();
         emptyView = View.inflate(context, id, emptyParentFrameLayout);
         //默认隐藏
-        emptyView.setVisibility(GONE);
+        emptyParentRelativeLayout.setVisibility(GONE);
     }
 
     public void setEmptyView(View view) {
@@ -229,7 +229,8 @@ public class EmptyRecyclerView extends FrameLayout {
         if (recyclerView != null) {
             recyclerView.setAdapter(adapter);
             adapter.registerAdapterDataObserver(observer);
-            checkIfEmpty();
+            //默认不要展示空布局
+            // checkIfEmpty();
         }
     }
 
