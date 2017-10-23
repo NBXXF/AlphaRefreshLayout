@@ -233,9 +233,6 @@ public class EmptyRecyclerView extends FrameLayout {
      * @param iDataEmptyAdapter
      */
     public void setAdapter(IDataEmptyAdapter iDataEmptyAdapter) {
-        if (mIDataEmptyAdapter == null) {
-            return;
-        }
         if (iDataEmptyAdapter instanceof RecyclerView.Adapter) {
             this.mIDataEmptyAdapter = iDataEmptyAdapter;
             RecyclerView.Adapter adapter = (RecyclerView.Adapter) iDataEmptyAdapter;
