@@ -91,6 +91,8 @@ public class EmptyRecyclerView extends FrameLayout {
         }
         emptyParentFrameLayout.removeAllViews();
         emptyView = View.inflate(context, id, emptyParentFrameLayout);
+        //默认隐藏
+        emptyView.setVisibility(GONE);
     }
 
     public void setEmptyView(View view) {
