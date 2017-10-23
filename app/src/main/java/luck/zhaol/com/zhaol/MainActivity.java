@@ -66,6 +66,7 @@ public class MainActivity extends AppCompatActivity {
                 smartRefreshLayout.setEnableLoadmore(true);
             }
         });
+        smartRefreshLayout.autoRefresh();
     }
 
 
@@ -84,11 +85,11 @@ public class MainActivity extends AppCompatActivity {
     private Collection<Model> refresh() {
 
         List<Model> models = new ArrayList<>();
-        for (int i = 1; i <= 20; i++) {
-            Model m = new Model();
-            m.name = "icourt_0" + i;
-            models.add(m);
-        }
+//        for (int i = 1; i <= 20; i++) {
+//            Model m = new Model();
+//            m.name = "icourt_0" + i;
+//            models.add(m);
+//        }
         return models;
     }
     /**

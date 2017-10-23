@@ -17,6 +17,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.scwang.smartrefresh.layout.util.DensityUtil;
+import com.zhaol.refreshlayout.interfaces.IDataEmptyAdapter;
 
 import java.util.List;
 
@@ -33,6 +34,7 @@ public class EmptyRecyclerView extends FrameLayout {
     private View emptyView;
     private FrameLayout emptyParentFrameLayout;
     private RelativeLayout emptyParentRelativeLayout;
+    private IDataEmptyAdapter mIDataEmptyAdapter;
     /**
      * 空布局icon
      */
@@ -81,8 +83,13 @@ public class EmptyRecyclerView extends FrameLayout {
         this.onEmptyViewClickListener = onEmptyViewClickListener;
     }
 
+    /**
+     * 获取空布局父容器
+     *
+     * @return
+     */
     public View getEmptyView() {
-        return emptyView;
+        return emptyParentRelativeLayout;
     }
 
     public void setEmptyView(Context context, @LayoutRes int id) {
@@ -223,14 +230,21 @@ public class EmptyRecyclerView extends FrameLayout {
     /**
      * 设置adapter
      *
-     * @param adapter
+     * @param iDataEmptyAdapter
      */
-    public void setAdapter(RecyclerView.Adapter adapter) {
-        if (recyclerView != null) {
-            recyclerView.setAdapter(adapter);
-            adapter.registerAdapterDataObserver(observer);
-            //默认不要展示空布局
-            // checkIfEmpty();
+    public void setAdapter(IDataEmptyAdapter iDataEmptyAdapter) {
+        if (mIDataEmptyAdapter == null) {
+            return;
+        }
+        if (iDataEmptyAdapter instanceof RecyclerView.Adapter) {
+            this.mIDataEmptyAdapter = iDataEmptyAdapter;
+            RecyclerView.Adapter adapter = (RecyclerView.Adapter) iDataEmptyAdapter;
+            if (recyclerView != null) {
+                recyclerView.setAdapter(adapter);
+                adapter.registerAdapterDataObserver(observer);
+                //默认不要展示空布局
+                // checkIfEmpty();
+            }
         }
     }
 
@@ -238,8 +252,8 @@ public class EmptyRecyclerView extends FrameLayout {
      * 是否显示emptyview
      */
     public void checkIfEmpty() {
-        if (emptyParentRelativeLayout != null && recyclerView.getAdapter() != null) {
-            boolean emptyViewVisible = recyclerView.getAdapter() == null || recyclerView.getAdapter().getItemCount() <= 0;
+        if (emptyParentRelativeLayout != null && mIDataEmptyAdapter != null) {
+            boolean emptyViewVisible = mIDataEmptyAdapter.getRealAdapterCount() <= 0;
             emptyParentRelativeLayout.setVisibility(emptyViewVisible ? VISIBLE : GONE);
             recyclerView.setVisibility(emptyViewVisible ? GONE : VISIBLE);
         }
