@@ -1,7 +1,7 @@
 # AlphaRefreshLayout
-# 发布日志
+# 发版日志
   1.0.6 空布局默认隐藏  
   
   
 #依赖地址   
-  compile 'com.zhaol.refreshlayout:refreshlayout:1.0.5'
+  compile 'com.zhaol.refreshlayout:refreshlayout:1.0.6'
