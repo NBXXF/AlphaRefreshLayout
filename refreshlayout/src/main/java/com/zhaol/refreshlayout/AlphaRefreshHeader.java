@@ -3,7 +3,6 @@ package com.zhaol.refreshlayout;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
-import android.graphics.drawable.Animatable;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
@@ -14,10 +13,11 @@ import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.util.AttributeSet;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
-import android.view.animation.LinearInterpolator;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 
 import com.scwang.smartrefresh.layout.api.RefreshHeader;
@@ -73,10 +73,9 @@ public class AlphaRefreshHeader extends RelativeLayout implements RefreshHeader 
             R.mipmap.pull_to_refresh_60
     );
     protected ImageView mArrowView;
-    protected ImageView mProgressView;
+    protected ProgressBar progressBar;
     protected RefreshKernel mRefreshKernel;
     protected com.zhaol.refreshlayout.MaterialProgressDrawable mArrowDrawable;
-    protected com.zhaol.refreshlayout.MaterialProgressDrawable mProgressDrawable;
     protected SpinnerStyle mSpinnerStyle = SpinnerStyle.Translate;
     protected int mFinishDuration = 500;
     protected int mBackgroundColor;
@@ -124,9 +123,8 @@ public class AlphaRefreshHeader extends RelativeLayout implements RefreshHeader 
 
         LayoutParams lpProgress = new LayoutParams(density.dip2px(51), density.dip2px(51));
         lpProgress.addRule(CENTER_IN_PARENT);
-        mProgressView = new ImageView(context);
-        mProgressView.animate().setInterpolator(new LinearInterpolator());
-        addView(mProgressView, lpProgress);
+        progressBar = (ProgressBar) LayoutInflater.from(context).inflate(R.layout.progressbar, this, false);
+        addView(progressBar, lpProgress);
 
         TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.ClassicsHeader);
 
@@ -148,16 +146,6 @@ public class AlphaRefreshHeader extends RelativeLayout implements RefreshHeader 
         } else {
             mArrowView.setImageResource(R.mipmap.pull_to_refresh_60);
         }
-
-        if (ta.hasValue(R.styleable.ClassicsHeader_srlDrawableProgress)) {
-            mProgressView.setImageDrawable(ta.getDrawable(R.styleable.ClassicsHeader_srlDrawableProgress));
-        } else {
-            mProgressDrawable = new com.zhaol.refreshlayout.MaterialProgressDrawable(getContext(), mProgressView);
-            mProgressDrawable.setColorSchemeColors(0xffed6c00);
-            mProgressDrawable.setAlpha(255);
-            mProgressView.setImageDrawable(mProgressDrawable);
-        }
-
         int primaryColor = ta.getColor(R.styleable.ClassicsHeader_srlPrimaryColor, 0);
         int accentColor = ta.getColor(R.styleable.ClassicsHeader_srlAccentColor, 0);
         if (primaryColor != 0) {
@@ -220,13 +208,6 @@ public class AlphaRefreshHeader extends RelativeLayout implements RefreshHeader 
         arrowParams.height = (int) (percent * 100);
         arrowParams.width = (int) (percent * 100);
         mArrowView.setLayoutParams(arrowParams);
-
-        LayoutParams progressParams = (LayoutParams) mProgressView.getLayoutParams();
-        progressParams.height = offset;
-        progressParams.width = offset;
-        mProgressView.setLayoutParams(progressParams);
-        mProgressDrawable.setSizeParameters(arrowParams.width, arrowParams.height, percent * 22, 2.0f, 10, 5);
-        mProgressView.setImageDrawable(mProgressDrawable);
     }
 
     private int getArrowViewResourceId(int offset) {
@@ -247,31 +228,11 @@ public class AlphaRefreshHeader extends RelativeLayout implements RefreshHeader 
 
     @Override
     public void onStartAnimator(RefreshLayout layout, int headHeight, int extendHeight) {
-        if (mProgressDrawable != null) {
-            mProgressDrawable.start();
-        } else {
-            Drawable drawable = mProgressView.getDrawable();
-            if (drawable instanceof Animatable) {
-                ((Animatable) drawable).start();
-            } else {
-                mProgressView.animate().rotation(36000).setDuration(100000);
-            }
-        }
     }
 
     @Override
     public int onFinish(RefreshLayout layout, boolean success) {
-        if (mProgressDrawable != null) {
-            mProgressDrawable.stop();
-        } else {
-            Drawable drawable = mProgressView.getDrawable();
-            if (drawable instanceof Animatable) {
-                ((Animatable) drawable).stop();
-            } else {
-                mProgressView.animate().rotation(0).setDuration(300);
-            }
-        }
-        mProgressView.setVisibility(GONE);
+        progressBar.setVisibility(GONE);
         //延迟500毫秒之后再弹回
         return mFinishDuration;
     }
@@ -302,41 +263,23 @@ public class AlphaRefreshHeader extends RelativeLayout implements RefreshHeader 
         switch (newState) {
             case PullDownToRefresh:
                 mArrowView.setVisibility(VISIBLE);
-                mProgressView.setVisibility(GONE);
+                progressBar.setVisibility(GONE);
                 break;
             case Refreshing:
-                mProgressView.setVisibility(VISIBLE);
+                progressBar.setVisibility(VISIBLE);
                 mArrowView.setVisibility(VISIBLE);
                 break;
             case ReleaseToRefresh:
-                mProgressView.setVisibility(GONE);
+                progressBar.setVisibility(GONE);
                 mArrowView.setVisibility(VISIBLE);
                 break;
             case Loading:
                 mArrowView.setVisibility(GONE);
-                mProgressView.setVisibility(GONE);
+                progressBar.setVisibility(GONE);
                 break;
             default:
                 break;
         }
-    }
-
-    public AlphaRefreshHeader setProgressBitmap(Bitmap bitmap) {
-        mProgressDrawable = null;
-        mProgressView.setImageBitmap(bitmap);
-        return this;
-    }
-
-    public AlphaRefreshHeader setProgressDrawable(Drawable drawable) {
-        mProgressDrawable = null;
-        mProgressView.setImageDrawable(drawable);
-        return this;
-    }
-
-    public AlphaRefreshHeader setProgressResource(@DrawableRes int resId) {
-        mProgressDrawable = null;
-        mProgressView.setImageResource(resId);
-        return this;
     }
 
     public AlphaRefreshHeader setArrowBitmap(Bitmap bitmap) {
@@ -374,7 +317,7 @@ public class AlphaRefreshHeader extends RelativeLayout implements RefreshHeader 
         return mArrowView;
     }
 
-    public ImageView getProgressView() {
-        return mProgressView;
+    public ProgressBar getProgressView() {
+        return progressBar;
     }
 }
