@@ -176,9 +176,7 @@ public class AlphaLoadFooter extends RelativeLayout implements RefreshFooter {
         return 0;
     }
 
-    /**
-     * AlphaLoadFooter 在(SpinnerStyle.FixedBehind)时才有主题色
-     */
+
     @Override
     @Deprecated
     public void setPrimaryColors(@ColorInt int... colors) {
@@ -193,6 +191,9 @@ public class AlphaLoadFooter extends RelativeLayout implements RefreshFooter {
 
     /**
      * 设置数据全部加载完成，将不能再次触发加载功能
+     *
+     * @param finished 是否完成
+     * @return 是否真的完成
      */
     @Override
     public boolean setLoadmoreFinished(boolean finished) {

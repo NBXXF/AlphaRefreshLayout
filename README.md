@@ -6,7 +6,8 @@
   1.0.9 获取列表真实数量 bug
   1.1.0 测试gradle依赖慢
   1.1.1 AlphaRefreshHeader替换progressBar
+  1.1.2 调整下拉头的动画
 
   
 #依赖地址   
-  compile 'com.zhaol.refreshlayout:refreshlayout:1.1.1'
+  compile 'com.zhaol.refreshlayout:refreshlayout:1.1.2'

@@ -40,13 +40,13 @@ import java.util.List;
 
 public class AlphaRefreshHeader extends RelativeLayout implements RefreshHeader {
     private static final List<Integer> HEADER_VIEW_IDS = Arrays.asList(
-//            R.mipmap.pull_to_refresh_0, R.mipmap.pull_to_refresh_1,
-//            R.mipmap.pull_to_refresh_2, R.mipmap.pull_to_refresh_3,
-//            R.mipmap.pull_to_refresh_4, R.mipmap.pull_to_refresh_5,
-//            R.mipmap.pull_to_refresh_6, R.mipmap.pull_to_refresh_7,
-//            R.mipmap.pull_to_refresh_8, R.mipmap.pull_to_refresh_9,
-//            R.mipmap.pull_to_refresh_10, R.mipmap.pull_to_refresh_11,
-//            R.mipmap.pull_to_refresh_12, R.mipmap.pull_to_refresh_13,
+            R.mipmap.pull_to_refresh_0, R.mipmap.pull_to_refresh_1,
+            R.mipmap.pull_to_refresh_2, R.mipmap.pull_to_refresh_3,
+            R.mipmap.pull_to_refresh_4, R.mipmap.pull_to_refresh_5,
+            R.mipmap.pull_to_refresh_6, R.mipmap.pull_to_refresh_7,
+            R.mipmap.pull_to_refresh_8, R.mipmap.pull_to_refresh_9,
+            R.mipmap.pull_to_refresh_10, R.mipmap.pull_to_refresh_11,
+            R.mipmap.pull_to_refresh_12, R.mipmap.pull_to_refresh_13,
             R.mipmap.pull_to_refresh_14, R.mipmap.pull_to_refresh_15,
             R.mipmap.pull_to_refresh_16, R.mipmap.pull_to_refresh_17,
             R.mipmap.pull_to_refresh_18, R.mipmap.pull_to_refresh_19,
@@ -125,6 +125,7 @@ public class AlphaRefreshHeader extends RelativeLayout implements RefreshHeader 
         lpProgress.addRule(CENTER_IN_PARENT);
         progressBar = (ProgressBar) LayoutInflater.from(context).inflate(R.layout.progressbar, this, false);
         addView(progressBar, lpProgress);
+        progressBar.setVisibility(GONE);
 
         TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.ClassicsHeader);
 
@@ -201,17 +202,27 @@ public class AlphaRefreshHeader extends RelativeLayout implements RefreshHeader 
     public void onHorizontalDrag(float percentX, int offsetX, int offsetMax) {
     }
 
+    /**
+     * @param percent      0-1.0 可能大于1.0
+     * @param offset       距离
+     * @param headHeight   高度
+     * @param extendHeight 未知
+     */
     @Override
     public void onPullingDown(float percent, int offset, int headHeight, int extendHeight) {
-        mArrowView.setImageResource(getArrowViewResourceId((int) (percent * 20)));
+        mArrowView.setImageResource(getArrowViewResourceId(percent));
         LayoutParams arrowParams = (LayoutParams) mArrowView.getLayoutParams();
         arrowParams.height = (int) (percent * 100);
         arrowParams.width = (int) (percent * 100);
         mArrowView.setLayoutParams(arrowParams);
     }
 
-    private int getArrowViewResourceId(int offset) {
-        return HEADER_VIEW_IDS.get(offset % 40);
+    private int getArrowViewResourceId(float percent) {
+        if (percent < 0 || percent >= 1.0f) {//最后一帧
+            return HEADER_VIEW_IDS.get(HEADER_VIEW_IDS.size() - 1);
+        }
+        //百分比-->每一帧   46
+        return HEADER_VIEW_IDS.get((int) (percent * (HEADER_VIEW_IDS.size() - 1)));
     }
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
