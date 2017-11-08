@@ -10,7 +10,8 @@
   1.1.3 初始化头部不显示
   1.1.4 初始化头部不显示2
   1.2.0 优化
+  1.2.1 替换图标
 
   
 #依赖地址   
-  compile 'com.zhaol.refreshlayout:refreshlayout:1.2.0'
+  compile 'com.zhaol.refreshlayout:refreshlayout:1.2.1'
