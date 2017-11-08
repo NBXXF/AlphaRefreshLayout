@@ -5,5 +5,5 @@
     android:layout_height="70dp"
     android:layout_gravity="center"
     android:background="@android:color/transparent"
-    android:indeterminateDrawable="@drawable/loading"
+    android:indeterminateDrawable="@drawable/alpha_refresh_loading"
     android:indeterminateDuration="1000" />

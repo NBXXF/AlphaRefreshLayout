@@ -66,6 +66,7 @@ public class MainActivity extends AppCompatActivity {
                 smartRefreshLayout.setEnableLoadmore(true);
             }
         });
+        smartRefreshLayout.setEnableLoadmore(true);
         //smartRefreshLayout.autoRefresh();
     }
 

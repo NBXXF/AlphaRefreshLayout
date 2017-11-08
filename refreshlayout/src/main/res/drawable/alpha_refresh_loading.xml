@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <rotate xmlns:android="http://schemas.android.com/apk/res/android"
-    android:drawable="@mipmap/loading"
+    android:drawable="@mipmap/alpha_refresh_loading"
     android:fromDegrees="0"
     android:interpolator="@android:anim/accelerate_interpolator"
     android:toDegrees="359"

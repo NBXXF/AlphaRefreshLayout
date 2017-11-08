@@ -12,6 +12,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -75,7 +76,7 @@ public class AlphaRefreshHeader extends RelativeLayout implements RefreshHeader 
     protected ImageView mArrowView;
     protected ProgressBar progressBar;
     protected RefreshKernel mRefreshKernel;
-    protected com.zhaol.refreshlayout.MaterialProgressDrawable mArrowDrawable;
+    protected MaterialProgressDrawable mArrowDrawable;
     protected SpinnerStyle mSpinnerStyle = SpinnerStyle.Translate;
     protected int mFinishDuration = 500;
     protected int mBackgroundColor;
@@ -178,6 +179,7 @@ public class AlphaRefreshHeader extends RelativeLayout implements RefreshHeader 
         }
     }
 
+
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         if (MeasureSpec.getMode(heightMeasureSpec) == MeasureSpec.EXACTLY) {
@@ -229,12 +231,16 @@ public class AlphaRefreshHeader extends RelativeLayout implements RefreshHeader 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     @Override
     public void onReleasing(float percent, int offset, int headHeight, int extendHeight) {
+        Log.d("----------->", "percent:" + percent + "   offset:" + offset);
         if (percent >= 1) {
             LayoutParams arrowParams = (LayoutParams) mArrowView.getLayoutParams();
             arrowParams.height = mArrowView.getMaxHeight();
             arrowParams.width = mArrowView.getMaxHeight();
             mArrowView.setLayoutParams(arrowParams);
             mArrowView.setImageResource(R.mipmap.pull_to_refresh_60);
+        }
+        if (percent <= 0.0f) {
+            mArrowView.setVisibility(INVISIBLE);
         }
     }
 
@@ -244,10 +250,11 @@ public class AlphaRefreshHeader extends RelativeLayout implements RefreshHeader 
 
     @Override
     public int onFinish(RefreshLayout layout, boolean success) {
-        progressBar.setVisibility(GONE);
+        progressBar.setVisibility(INVISIBLE);
         //延迟500毫秒之后再弹回
         return mFinishDuration;
     }
+
 
     @Override
     @Deprecated
@@ -286,13 +293,6 @@ public class AlphaRefreshHeader extends RelativeLayout implements RefreshHeader 
                 mArrowView.setVisibility(VISIBLE);
                 break;
             case Loading:
-                mArrowView.setVisibility(GONE);
-                progressBar.setVisibility(GONE);
-                break;
-            case PullDownCanceled:
-            case PullUpCanceled:
-            case RefreshFinish:
-            case LoadFinish:
                 mArrowView.setVisibility(GONE);
                 progressBar.setVisibility(GONE);
                 break;

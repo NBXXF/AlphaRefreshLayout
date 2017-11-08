@@ -155,7 +155,7 @@ public class EmptyRecyclerView extends FrameLayout {
         if (emptyParentFrameLayout == null) {
             return;
         }
-        FrameLayout.LayoutParams layoutParams = (FrameLayout.LayoutParams) emptyParentFrameLayout.getLayoutParams();
+        LayoutParams layoutParams = (LayoutParams) emptyParentFrameLayout.getLayoutParams();
         if (layoutParams == null) {
             return;
         }
@@ -173,7 +173,7 @@ public class EmptyRecyclerView extends FrameLayout {
         if (emptyParentFrameLayout == null) {
             return;
         }
-        FrameLayout.LayoutParams layoutParams = (FrameLayout.LayoutParams) emptyParentFrameLayout.getLayoutParams();
+        LayoutParams layoutParams = (LayoutParams) emptyParentFrameLayout.getLayoutParams();
         if (layoutParams == null) {
             return;
         }
