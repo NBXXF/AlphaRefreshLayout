@@ -1,6 +1,7 @@
 package luck.zhaol.com.zhaol;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
@@ -51,12 +52,18 @@ public class MainActivity extends AppCompatActivity {
         smartRefreshLayout.setOnRefreshLoadmoreListener(new OnRefreshLoadmoreListener() {
             @Override
             public void onLoadmore(RefreshLayout refreshlayout) {
-                mAdapter.loadmore(loadModels1());
-                smartRefreshLayout.finishLoadmore();
-                if (mAdapter.getCount() >= 100) {
-                    Toast.makeText(getBaseContext(), "数据全部加载完毕", Toast.LENGTH_SHORT).show();
-                    smartRefreshLayout.setEnableLoadmore(false);
-                }
+
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        mAdapter.loadmore(loadModels1());
+                        smartRefreshLayout.finishLoadmore();
+                        if (mAdapter.getCount() >= 100) {
+                            Toast.makeText(getBaseContext(), "数据全部加载完毕", Toast.LENGTH_SHORT).show();
+                            //smartRefreshLayout.setEnableLoadmore(false);
+                        }
+                    }
+                }, 2_000);
             }
 
             @Override
@@ -71,7 +78,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-
     /**
      * 模拟数据
      */
@@ -80,6 +86,7 @@ public class MainActivity extends AppCompatActivity {
         List<Model> models = new ArrayList<>();
         return models;
     }
+
     /**
      * 模拟数据
      */
@@ -93,6 +100,7 @@ public class MainActivity extends AppCompatActivity {
 //        }
         return models;
     }
+
     /**
      * 模拟数据
      */

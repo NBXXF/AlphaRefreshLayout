@@ -2,19 +2,15 @@ package com.zhaol.refreshlayout;
 
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.support.annotation.ColorInt;
 import android.support.annotation.ColorRes;
-import android.support.annotation.DrawableRes;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.LinearInterpolator;
-import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 
 import com.scwang.smartrefresh.layout.api.RefreshFooter;
@@ -34,8 +30,7 @@ import com.scwang.smartrefresh.layout.util.DensityUtil;
 
 public class AlphaLoadFooter extends RelativeLayout implements RefreshFooter {
 
-    protected ImageView mProgressView;
-    protected com.zhaol.refreshlayout.MaterialProgressDrawable mProgressDrawable;
+    protected ProgressBar mProgressView;
     protected SpinnerStyle mSpinnerStyle = SpinnerStyle.Translate;
     protected RefreshKernel mRefreshKernel;
     protected int mFinishDuration = 500;
@@ -62,11 +57,11 @@ public class AlphaLoadFooter extends RelativeLayout implements RefreshFooter {
     private void initView(Context context, AttributeSet attrs, int defStyleAttr) {
         DensityUtil density = new DensityUtil();
 
-        LayoutParams lpProgress = new LayoutParams(density.dip2px(50), density.dip2px(50));
+        LayoutParams lpProgress = new LayoutParams(density.dip2px(25), density.dip2px(25));
         lpProgress.addRule(CENTER_IN_PARENT);
-        mProgressView = new ImageView(context);
-        mProgressView.animate().setInterpolator(new LinearInterpolator());
+        mProgressView = new ProgressBar(getContext());
         addView(mProgressView, lpProgress);
+        mProgressView.setVisibility(INVISIBLE);
 
         TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.ClassicsFooter);
 
@@ -79,18 +74,6 @@ public class AlphaLoadFooter extends RelativeLayout implements RefreshFooter {
         mFinishDuration = ta.getInt(R.styleable.ClassicsFooter_srlFinishDuration, mFinishDuration);
         mSpinnerStyle = SpinnerStyle.values()[ta.getInt(R.styleable.ClassicsFooter_srlClassicsSpinnerStyle, mSpinnerStyle.ordinal())];
 
-
-        if (ta.hasValue(R.styleable.ClassicsFooter_srlDrawableProgress)) {
-            mProgressView.setImageDrawable(ta.getDrawable(R.styleable.ClassicsFooter_srlDrawableProgress));
-        } else {
-            mProgressDrawable = new com.zhaol.refreshlayout.MaterialProgressDrawable(getContext(), mProgressView);
-            mProgressDrawable.setColorSchemeColors(0xffed6c00);
-            mProgressDrawable.setAlpha(255);
-            mProgressDrawable.setProgressRotation(0.9f);
-            mProgressDrawable.setStartEndTrim(0f, 0.2f);
-            mProgressDrawable.updateSizes(com.zhaol.refreshlayout.MaterialProgressDrawable.DEFAULT);
-            mProgressView.setImageDrawable(mProgressDrawable);
-        }
 
         if (ta.hasValue(R.styleable.ClassicsFooter_srlPrimaryColor)) {
             setPrimaryColor(ta.getColor(R.styleable.ClassicsFooter_srlPrimaryColor, 0));
@@ -154,23 +137,13 @@ public class AlphaLoadFooter extends RelativeLayout implements RefreshFooter {
     public void onStartAnimator(RefreshLayout layout, int headHeight, int extendHeight) {
         if (!mLoadmoreFinished) {
             mProgressView.setVisibility(VISIBLE);
-            if (mProgressDrawable != null) {
-                mProgressDrawable.start();
-            } else {
-                mProgressView.animate().rotation(36000).setDuration(100000);
-            }
         }
     }
 
     @Override
     public int onFinish(RefreshLayout layout, boolean success) {
         if (!mLoadmoreFinished) {
-            if (mProgressDrawable != null) {
-                mProgressDrawable.stop();
-            } else {
-                mProgressView.animate().rotation(0).setDuration(300);
-            }
-            mProgressView.setVisibility(GONE);
+            mProgressView.setVisibility(INVISIBLE);
             return mFinishDuration;
         }
         return 0;
@@ -199,12 +172,7 @@ public class AlphaLoadFooter extends RelativeLayout implements RefreshFooter {
     public boolean setLoadmoreFinished(boolean finished) {
         if (mLoadmoreFinished != finished) {
             mLoadmoreFinished = finished;
-            if (mProgressDrawable != null) {
-                mProgressDrawable.stop();
-            } else {
-                mProgressView.animate().rotation(0).setDuration(300);
-            }
-            mProgressView.setVisibility(GONE);
+            mProgressView.setVisibility(INVISIBLE);
         }
         return true;
     }
@@ -238,24 +206,6 @@ public class AlphaLoadFooter extends RelativeLayout implements RefreshFooter {
                     break;
             }
         }
-    }
-
-    public AlphaLoadFooter setProgressBitmap(Bitmap bitmap) {
-        mProgressDrawable = null;
-        mProgressView.setImageBitmap(bitmap);
-        return this;
-    }
-
-    public AlphaLoadFooter setProgressDrawable(Drawable drawable) {
-        mProgressDrawable = null;
-        mProgressView.setImageDrawable(drawable);
-        return this;
-    }
-
-    public AlphaLoadFooter setProgressResource(@DrawableRes int resId) {
-        mProgressDrawable = null;
-        mProgressView.setImageResource(resId);
-        return this;
     }
 
     public AlphaLoadFooter setSpinnerStyle(SpinnerStyle style) {
@@ -293,7 +243,7 @@ public class AlphaLoadFooter extends RelativeLayout implements RefreshFooter {
         return this;
     }
 
-    public ImageView getProgressView() {
+    public ProgressBar getProgressView() {
         return mProgressView;
     }
 
