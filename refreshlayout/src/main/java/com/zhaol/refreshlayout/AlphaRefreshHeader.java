@@ -120,12 +120,13 @@ public class AlphaRefreshHeader extends RelativeLayout implements RefreshHeader 
         mArrowView.setMaxWidth(density.dip2px(50));
         mArrowView.setMaxHeight(density.dip2px(50));
         addView(mArrowView, lpArrow);
+        mArrowView.setVisibility(INVISIBLE);
 
         LayoutParams lpProgress = new LayoutParams(density.dip2px(51), density.dip2px(51));
         lpProgress.addRule(CENTER_IN_PARENT);
         progressBar = (ProgressBar) LayoutInflater.from(context).inflate(R.layout.progressbar, this, false);
         addView(progressBar, lpProgress);
-        progressBar.setVisibility(GONE);
+        progressBar.setVisibility(INVISIBLE);
 
         TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.ClassicsHeader);
 
@@ -210,6 +211,8 @@ public class AlphaRefreshHeader extends RelativeLayout implements RefreshHeader 
      */
     @Override
     public void onPullingDown(float percent, int offset, int headHeight, int extendHeight) {
+        mArrowView.setVisibility(VISIBLE);
+        progressBar.setVisibility(VISIBLE);
         mArrowView.setImageResource(getArrowViewResourceId(percent));
         LayoutParams arrowParams = (LayoutParams) mArrowView.getLayoutParams();
         arrowParams.height = (int) (percent * 100);

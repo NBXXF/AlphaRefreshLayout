@@ -29,7 +29,7 @@ public class BaseApplication extends Application {
             public RefreshHeader createRefreshHeader(Context context, RefreshLayout layout) {
                 layout.setPrimaryColorsId(R.color.white, R.color.white);
                 layout.setHeaderHeight(100);
-                return new AlphaRefreshHeader(context).setSpinnerStyle(SpinnerStyle.Translate);
+                return new AlphaRefreshHeader(context).setSpinnerStyle(SpinnerStyle.FixedBehind);
             }
         });
         //设置全局的Footer构建器
@@ -38,10 +38,11 @@ public class BaseApplication extends Application {
             public RefreshFooter createRefreshFooter(Context context, RefreshLayout layout) {
                 layout.setPrimaryColorsId(R.color.white, R.color.white);
                 layout.setFooterHeight(100);
-                return new AlphaLoadFooter(context).setSpinnerStyle(SpinnerStyle.Translate);
+                return new AlphaLoadFooter(context).setSpinnerStyle(SpinnerStyle.FixedBehind);
             }
         });
     }
+
     @Override
     public void onCreate() {
         super.onCreate();
