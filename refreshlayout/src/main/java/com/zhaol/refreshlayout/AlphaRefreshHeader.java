@@ -211,8 +211,6 @@ public class AlphaRefreshHeader extends RelativeLayout implements RefreshHeader 
      */
     @Override
     public void onPullingDown(float percent, int offset, int headHeight, int extendHeight) {
-        mArrowView.setVisibility(VISIBLE);
-        progressBar.setVisibility(VISIBLE);
         mArrowView.setImageResource(getArrowViewResourceId(percent));
         LayoutParams arrowParams = (LayoutParams) mArrowView.getLayoutParams();
         arrowParams.height = (int) (percent * 100);
@@ -288,6 +286,13 @@ public class AlphaRefreshHeader extends RelativeLayout implements RefreshHeader 
                 mArrowView.setVisibility(VISIBLE);
                 break;
             case Loading:
+                mArrowView.setVisibility(GONE);
+                progressBar.setVisibility(GONE);
+                break;
+            case PullDownCanceled:
+            case PullUpCanceled:
+            case RefreshFinish:
+            case LoadFinish:
                 mArrowView.setVisibility(GONE);
                 progressBar.setVisibility(GONE);
                 break;

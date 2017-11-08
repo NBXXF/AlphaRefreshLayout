@@ -8,7 +8,8 @@
   1.1.1 AlphaRefreshHeader替换progressBar
   1.1.2 调整下拉头的动画
   1.1.3 初始化头部不显示
+  1.1.4 初始化头部不显示2
 
   
 #依赖地址   
-  compile 'com.zhaol.refreshlayout:refreshlayout:1.1.3'
+  compile 'com.zhaol.refreshlayout:refreshlayout:1.1.4'

@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
@@ -12,7 +13,6 @@ import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadmoreListener;
 import com.zhaol.refreshlayout.AlphaLoadFooter;
 import com.zhaol.refreshlayout.AlphaRefreshHeader;
-import com.zhaol.refreshlayout.EmptyRecyclerView;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -21,7 +21,7 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
 
     SmartRefreshLayout smartRefreshLayout;
-    EmptyRecyclerView recyclerView;
+    RecyclerView recyclerView;
     AlphaRefreshHeader headerView;
     AlphaLoadFooter footerView;
 
@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         smartRefreshLayout = (SmartRefreshLayout) findViewById(R.id.SmartRefreshLayout);
-        recyclerView = (EmptyRecyclerView) findViewById(R.id.EmptyRecyclerView);
+        recyclerView = (RecyclerView) findViewById(R.id.EmptyRecyclerView);
 
         smartRefreshLayout.setEnableAutoLoadmore(false);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -66,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
                 smartRefreshLayout.setEnableLoadmore(true);
             }
         });
-        smartRefreshLayout.autoRefresh();
+        //smartRefreshLayout.autoRefresh();
     }
 
 

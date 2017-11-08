@@ -27,7 +27,7 @@ public class BaseApplication extends Application {
         SmartRefreshLayout.setDefaultRefreshHeaderCreater(new DefaultRefreshHeaderCreater() {
             @Override
             public RefreshHeader createRefreshHeader(Context context, RefreshLayout layout) {
-                layout.setPrimaryColorsId(R.color.white, R.color.white);
+                layout.setPrimaryColorsId(R.color.trnas);
                 layout.setHeaderHeight(100);
                 return new AlphaRefreshHeader(context).setSpinnerStyle(SpinnerStyle.FixedBehind);
             }
@@ -36,7 +36,7 @@ public class BaseApplication extends Application {
         SmartRefreshLayout.setDefaultRefreshFooterCreater(new DefaultRefreshFooterCreater() {
             @Override
             public RefreshFooter createRefreshFooter(Context context, RefreshLayout layout) {
-                layout.setPrimaryColorsId(R.color.white, R.color.white);
+                layout.setPrimaryColorsId(R.color.trnas);
                 layout.setFooterHeight(100);
                 return new AlphaLoadFooter(context).setSpinnerStyle(SpinnerStyle.FixedBehind);
             }
