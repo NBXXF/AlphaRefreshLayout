@@ -12,7 +12,8 @@
   1.2.0 优化
   1.2.1 替换图标
   1.2.2 上拉加载兼容5.0
+  1.2.3 回弹时间为250ms
 
   
 #依赖地址   
-  compile 'com.zhaol.refreshlayout:refreshlayout:1.2.2'
+  compile 'com.zhaol.refreshlayout:refreshlayout:1.2.3'

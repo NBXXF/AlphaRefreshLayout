@@ -33,7 +33,7 @@ public class AlphaLoadFooter extends RelativeLayout implements RefreshFooter {
     protected ProgressBar mProgressView;
     protected SpinnerStyle mSpinnerStyle = SpinnerStyle.Translate;
     protected RefreshKernel mRefreshKernel;
-    protected int mFinishDuration = 500;
+    protected int mFinishDuration = 250;
     protected int mBackgroundColor = 0;
     protected boolean mLoadmoreFinished = false;
     protected int mPaddingTop = 20;

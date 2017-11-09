@@ -78,7 +78,7 @@ public class AlphaRefreshHeader extends RelativeLayout implements RefreshHeader 
     protected RefreshKernel mRefreshKernel;
     protected MaterialProgressDrawable mArrowDrawable;
     protected SpinnerStyle mSpinnerStyle = SpinnerStyle.Translate;
-    protected int mFinishDuration = 500;
+    protected int mFinishDuration = 250;
     protected int mBackgroundColor;
     protected int mPaddingTop = 20;
     protected int mPaddingBottom = 20;
