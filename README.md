@@ -13,7 +13,8 @@
   1.2.1 替换图标
   1.2.2 上拉加载兼容5.0
   1.2.3 回弹时间为250ms
+  1.2.4 去除接口依赖和EmptyRecyclerView
 
   
 #依赖地址   
-  compile 'com.zhaol.refreshlayout:refreshlayout:1.2.3'
+  compile 'com.zhaol.refreshlayout:refreshlayout:1.2.4'

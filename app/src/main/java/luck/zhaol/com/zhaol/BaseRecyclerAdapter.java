@@ -10,7 +10,6 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListAdapter;
 
-import com.zhaol.refreshlayout.interfaces.IDataEmptyAdapter;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -21,7 +20,7 @@ import java.util.List;
  * Created by SCWANG on 2017/6/11.
  */
 
-public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter<SmartViewHolder> implements ListAdapter,IDataEmptyAdapter {
+public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter<SmartViewHolder> implements ListAdapter{
 
 
     //<editor-fold desc="BaseRecyclerAdapter">
@@ -149,11 +148,6 @@ public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter<SmartV
 
     @Override
     public int getCount() {
-        return mList.size();
-    }
-
-    @Override
-    public int getRealAdapterCount() {
         return mList.size();
     }
 
